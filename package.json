@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.10.1"
+  },
+  "name": "whisker-app",
+  "version": "1.0.0",
+  "description": "A full-stack Scratch-themed social media project",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Whisker-Media/whisker-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Whisker-Media/whisker-app/issues"
+  },
+  "homepage": "https://github.com/Whisker-Media/whisker-app#readme"
+}
