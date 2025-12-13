@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: pip install requests PyGithub
 
-      - name: Label issue or PR
+      - name: Label issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
@@ -31,48 +31,46 @@ jobs:
           import requests
           from github import Github
 
-          # Hugging Face zero-shot classification
-          API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"
+          # Use the Hugging Face **router inference endpoint**
+          API_URL = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-mnli"
           HF_HEADERS = {"Authorization": f"Bearer {os.environ['HF_TOKEN']}"}
 
-          # GitHub API setup
           gh = Github(os.environ["GITHUB_TOKEN"])
           repo = gh.get_repo(os.environ["REPO"])
           issue_number = int(os.environ["ISSUE_NUMBER"])
           issue = repo.get_issue(number=issue_number)
 
-          # Allowed labels
-          allowed_labels = ["Low Priority", "Medium Priority", "High Priority", "bug", "feature", "enhancement"]
+          allowed_labels = ["Low Priority", "Medium Priority", "High Priority", "bug", "feature", "enhancement", "documentation", "question"]
 
-          def query_hf(text, candidate_labels):
-              payload = {"inputs": text, "parameters": {"candidate_labels": candidate_labels}}
+          def classify(text, labels):
+              payload = {
+                  "inputs": text,
+                  "parameters": {"candidate_labels": labels}
+              }
               try:
-                  response = requests.post(API_URL, headers=HF_HEADERS, json=payload, timeout=30)
-                  response.raise_for_status()
-                  return response.json()
+                  r = requests.post(API_URL, headers=HF_HEADERS, json=payload, timeout=30)
+                  r.raise_for_status()
+                  return r.json()
               except Exception as e:
-                  print("Error querying HF:", e)
+                  print("HF API error:", e)
                   return None
 
-          # Combine title and body
           text = f"{issue.title}\n{issue.body or ''}"
-          print("Issue/PR text:", text)
+          print("Text to classify:", text)
 
-          # Query Hugging Face
-          result = query_hf(text, allowed_labels)
-          if result is None:
-              print("HF query failed, skipping labeling.")
+          result = classify(text, allowed_labels)
+          if not result:
+              print("Skipping labeling.")
               exit(1)
 
-          print("HF response:", result)
+          print("HF result:", result)
 
-          # Apply labels above a confidence threshold
-          threshold = 0.3
-          labels_to_apply = [label for label, score in zip(result["labels"], result["scores"]) if score > threshold]
+          # Depending on HF output format, it might use keys "labels"/"scores" or similar
+          labels_to_apply = [label for label, score in zip(result.get("labels", []), result.get("scores", [])) if score > 0.3]
 
           if labels_to_apply:
               issue.add_to_labels(*labels_to_apply)
-              print("Labels applied:", labels_to_apply)
+              print("Applied labels:", labels_to_apply)
           else:
-              print("No labels matched confidently.")
+              print("No labels above threshold.")
           EOF
