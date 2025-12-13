@@ -1,35 +1,41 @@
+
 .landing {
-  min-height: 100vh;
+  background: #121212;
+  color: #fff;
+}
+
+.landing-content {
+  padding-top: 70px;
+  min-height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  text-align: center;
 }
 
-.landing-header {
-  max-width: 600px;
-  padding: 2rem;
+.content-wrapper {
+  max-width: 700px;
+  margin: 0 2rem;
+  text-align: left;
 }
 
-.landing-header h1 {
+.content-wrapper h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
   font-weight: bold;
+  color: #ffffff;
 }
 
-.landing-header p {
+.content-wrapper p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  opacity: 0.9;
+  color: #cfcfcf;
 }
 
 .enter-button {
   display: inline-block;
   padding: 1rem 2rem;
   background: #ff6b6b;
-  color: white;
+  color: #fff;
   text-decoration: none;
   border-radius: 50px;
   font-size: 1.1rem;
