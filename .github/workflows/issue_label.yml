@@ -19,8 +19,7 @@ jobs:
 
       - name: AI Label Issue
         run: >
-          node -e "
-          import fetch from 'node-fetch';
+          node --input-type=module -e "
           import puter from 'https://esm.sh/puter.js@2.0.0';
           const issueNumber=process.env.ISSUE_NUMBER;
           const issueBody=process.env.ISSUE_BODY;
