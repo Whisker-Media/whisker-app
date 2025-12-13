@@ -1,4 +1,4 @@
-name: HF AI Issue Labeller
+name: Issue Labeller
 
 on:
   issues:
@@ -22,55 +22,54 @@ jobs:
       - name: Label issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GOOGLE_API_KEY: ${{ secrets.HF_TOKEN }}
           REPO: ${{ github.repository }}
           ISSUE_NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
         run: |
           python - <<'EOF'
           import os
           import requests
-          from github import Github
+          from github import Github, Auth
 
-          # Use the Hugging Face **router inference endpoint**
-          API_URL = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-mnli"
-          HF_HEADERS = {"Authorization": f"Bearer {os.environ['HF_TOKEN']}"}
-
-          gh = Github(os.environ["GITHUB_TOKEN"])
+          # GitHub setup using recommended Auth.Token
+          gh = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
           repo = gh.get_repo(os.environ["REPO"])
           issue_number = int(os.environ["ISSUE_NUMBER"])
           issue = repo.get_issue(number=issue_number)
 
-          allowed_labels = ["Low Priority", "Medium Priority", "High Priority", "bug", "feature", "enhancement", "documentation", "question"]
+          # Allowed labels
+          allowed_labels = ["Low Priority", "Medium Priority", "High Priority", "bug", "feature", "enhancement"]
 
-          def classify(text, labels):
-              payload = {
-                  "inputs": text,
-                  "parameters": {"candidate_labels": labels}
-              }
-              try:
-                  r = requests.post(API_URL, headers=HF_HEADERS, json=payload, timeout=30)
-                  r.raise_for_status()
-                  return r.json()
-              except Exception as e:
-                  print("HF API error:", e)
-                  return None
-
+          # Prepare prompt for Google AI
           text = f"{issue.title}\n{issue.body or ''}"
-          print("Text to classify:", text)
+          prompt = f"Suggest relevant GitHub labels from this list: {', '.join(allowed_labels)}\n\nText:\n{text}\n\nRespond with a comma-separated list using only these labels."
 
-          result = classify(text, allowed_labels)
-          if not result:
-              print("Skipping labeling.")
+          # Call Google Generative Language API (text-bison-001)
+          api_key = os.environ["GOOGLE_API_KEY"]
+          url = f"https://api.generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generate?key={api_key}"
+          payload = {
+              "prompt": {"text": prompt},
+              "temperature": 0.0,
+              "candidate_labels": allowed_labels  # optional, helps AI focus
+          }
+
+          try:
+              response = requests.post(url, json=payload, timeout=30)
+              response.raise_for_status()
+              data = response.json()
+              # The generated text is usually here:
+              output_text = data.get("candidates", [{}])[0].get("output", "")
+              print("AI output:", output_text)
+          except Exception as e:
+              print("Google AI API error:", e)
               exit(1)
 
-          print("HF result:", result)
-
-          # Depending on HF output format, it might use keys "labels"/"scores" or similar
-          labels_to_apply = [label for label, score in zip(result.get("labels", []), result.get("scores", [])) if score > 0.3]
+          # Extract labels that match allowed labels
+          labels_to_apply = [label for label in allowed_labels if label.lower() in output_text.lower()]
 
           if labels_to_apply:
               issue.add_to_labels(*labels_to_apply)
               print("Applied labels:", labels_to_apply)
           else:
-              print("No labels above threshold.")
+              print("No valid labels found from AI output.")
           EOF
