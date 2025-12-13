@@ -1,4 +1,4 @@
-name: Issue Labeller
+name: AI Issue Labeller
 
 on:
   issues:
@@ -7,63 +7,73 @@ on:
 jobs:
   label:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          python-version: '3.11'
+          node-version: 20
 
-      - name: Install dependencies
-        run: pip install google-genai PyGithub
+      - name: AI Label Issue
+        run: |
+          node -e "
+          import fetch from 'node-fetch';
+          import puter from 'https://esm.sh/puter.js@2.0.0';
 
-      - name: Label issue or PR
+          const issueNumber = process.env.ISSUE_NUMBER;
+          const issueBody = process.env.ISSUE_BODY;
+          const repo = process.env.GITHUB_REPOSITORY;
+          const token = process.env.GITHUB_TOKEN;
+
+          // Allowed labels
+          const allowedLabels = [
+            'bug',
+            'documentation',
+            'duplicate',
+            'enhancement',
+            'High Priority',
+            'Medium Priority',
+            'Low Priority',
+            'question'
+          ];
+
+          (async () => {
+            // Ask AI to suggest labels from predefined list
+            const labelsResponse = await puter.ai.chat(
+              `Suggest the most appropriate GitHub labels for this issue from this list: ${allowedLabels.join(', ')}. Only pick relevant ones: ${issueBody}`,
+              { model: 'gpt-5-nano' }
+            );
+
+            // Convert AI response to array and filter allowed labels
+            const suggestedLabels = labelsResponse
+              .split(/,|\\n/)
+              .map(l => l.trim())
+              .filter(l => allowedLabels.includes(l));
+
+            if(suggestedLabels.length === 0){
+              console.log('No valid labels suggested by AI.');
+              return;
+            }
+
+            // Apply labels via GitHub API
+            await fetch(`https://api.github.com/repos/${repo}/issues/${issueNumber}/labels`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github+json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ labels: suggestedLabels })
+            });
+
+            console.log('Labels applied:', suggestedLabels);
+          })();
+        "
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GOOGLE_API_KEY: ${{ secrets.HF_TOKEN }}
-          REPO: ${{ github.repository }}
-          ISSUE_NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
-        run: |
-          python - <<'EOF'
-          import os
-          from github import Github, Auth
-          import google.genai as genai
-
-          # GitHub setup
-          gh = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"]))
-          repo = gh.get_repo(os.environ["REPO"])
-          issue_number = int(os.environ["ISSUE_NUMBER"])
-          issue = repo.get_issue(number=issue_number)
-
-          allowed_labels = ["Low Priority", "Medium Priority", "High Priority", "bug", "feature", "enhancement"]
-
-          # Prepare prompt
-          text = f"{issue.title}\n{issue.body or ''}"
-          prompt = f"Suggest relevant GitHub labels from this list: {', '.join(allowed_labels)}\n\nText:\n{text}\n\nRespond with a comma-separated list using only these labels."
-
-          # Initialize Gemini client
-          client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
-
-          # Generate response
-          try:
-              response = client.models.generate_content(
-                  model="gemini-2.5-flash",
-                  contents=prompt
-              )
-              output_text = response.text
-              print("AI output:", output_text)
-          except Exception as e:
-              print("Google Gemini API error:", e)
-              exit(1)
-
-          # Match labels
-          labels_to_apply = [label for label in allowed_labels if label.lower() in output_text.lower()]
-
-          if labels_to_apply:
-              issue.add_to_labels(*labels_to_apply)
-              print("Applied labels:", labels_to_apply)
-          else:
-              print("No valid labels found from AI output.")
-          EOF
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
