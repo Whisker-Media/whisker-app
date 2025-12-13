@@ -1,0 +1,2 @@
+- name: Advanced Issue Labeler
+  uses: redhat-plumbers-in-action/advanced-issue-labeler@v3.2.4
