@@ -14,7 +14,7 @@ let app;
 if (!getApps().length) {
     app = initializeApp(firebaseConfig);
 } else {
-    app = getApp();
+    app = getApp(import.meta.env.VITE_FIREBASE_APP_CONFIG || undefined);
 }
 
 const firestore = getFirestore(app);
