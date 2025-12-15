@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "pnpm next dev || next dev",
+    "build": "pnpm next build || next build",
+    "start": "pnpm next start || next start",
+    "lint": "pnpm eslint || eslint"
   },
   "dependencies": {
     "next": "16.0.10",
