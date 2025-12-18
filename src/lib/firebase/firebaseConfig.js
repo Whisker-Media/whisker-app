@@ -1,3 +1,6 @@
+// Copyright 2025 Whisker Media Group
+// Licensed under the Apache License, Version 2.0
+
 // do not make any changes to this file
 
 const firebaseConfig = {

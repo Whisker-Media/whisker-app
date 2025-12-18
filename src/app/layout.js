@@ -1,3 +1,6 @@
+// Copyright 2025 Whisker Media Group
+// Licensed under the Apache License, Version 2.0
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
