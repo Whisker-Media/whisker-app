@@ -9,6 +9,7 @@
     "lint": "pnpm eslint || eslint"
   },
   "dependencies": {
+    "@whisker/vm": "github:Whisker-Media/whisker-vm#68896452bf2483a2d69343260e8c71c7416fd89f",
     "next": "16.0.10",
     "react": "19.2.1",
     "react-dom": "19.2.1"

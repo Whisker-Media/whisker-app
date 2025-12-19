@@ -2,12 +2,17 @@
 // Licensed under the Apache License, Version 2.0
 
 import Image from "next/image";
-import Header from ""
+
 
 export default function Home() {
   return (
       <div>
-        <Header />
+        <h1 className="text-4xl font-bold text-center mt-10">
+          Welcome to Whisker App!
+        </h1>
+        <p className="text-center mt-4 text-lg">
+          Your gateway to awesome content.
+        </p>
       </div>
   );
 }
