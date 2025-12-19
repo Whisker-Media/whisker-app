@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@whisker/vm':
-        specifier: github:Whisker-Media/whisker-vm#68896452bf2483a2d69343260e8c71c7416fd89f
-        version: '@whisker-media/vm@git+https://github.com/Whisker-Media/whisker-vm.git#68896452bf2483a2d69343260e8c71c7416fd89f'
+        specifier: github:Whisker-Media/whisker-vm
+        version: '@whisker-media/vm@git+https://github.com/Whisker-Media/whisker-vm.git#ed6eac3575c313ccc111e9e32d5506854f5fc31b'
       next:
         specifier: 16.0.10
         version: 16.0.10(@babel/core@7.28.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -887,9 +887,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@whisker-media/vm@git+https://github.com/Whisker-Media/whisker-vm.git#68896452bf2483a2d69343260e8c71c7416fd89f':
-    resolution: {commit: 68896452bf2483a2d69343260e8c71c7416fd89f, repo: https://github.com/Whisker-Media/whisker-vm.git, type: git}
-    version: 1.0.2
+  '@whisker-media/vm@git+https://github.com/Whisker-Media/whisker-vm.git#ed6eac3575c313ccc111e9e32d5506854f5fc31b':
+    resolution: {commit: ed6eac3575c313ccc111e9e32d5506854f5fc31b, repo: https://github.com/Whisker-Media/whisker-vm.git, type: git}
+    version: 1.0.3
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -3181,7 +3181,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@whisker-media/vm@git+https://github.com/Whisker-Media/whisker-vm.git#68896452bf2483a2d69343260e8c71c7416fd89f':
+  '@whisker-media/vm@git+https://github.com/Whisker-Media/whisker-vm.git#ed6eac3575c313ccc111e9e32d5506854f5fc31b':
     dependencies:
       firebase: 9.23.0
     transitivePeerDependencies:
