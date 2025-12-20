@@ -1,3 +1,6 @@
+// Copyright 2025 Whisker Media Group
+// Licensed under the Apache License, Version 2.0
+
 import Link from "next/link";
 
 async function getUser() {
@@ -20,42 +23,48 @@ export default async function MenuBar() {
   ];
 
   return (
-    <nav className="bg-gray-800 p-4 text-white flex justify-between items-center">
-      <div>Whisker Logo Here</div>
+    <nav className="bg-black border-b border-neutral-800 px-6 py-4 text-neutral-400">
+      <div className="mx-auto flex max-w-6xl items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center gap-2 text-sm font-light">
+          <span className="text-amber-500 font-semibold">Whisker</span>
+        </div>
 
-      {user ? (
-        <div className="relative group">
-          {/* A dropdown for logged in user */}
-          <button className="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">
-            {user.displayName}
-          </button>
+        {user ? (
+          <div className="relative group">
+            <button className="rounded px-4 py-2 text-sm font-light text-neutral-300 hover:text-amber-500 transition">
+              {user.displayName}
+            </button>
 
-          {/* Dropdown menu  */}
-          <ul className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            {authLinks.map((link) => (
+            <ul className="absolute right-0 mt-2 w-48 rounded border border-neutral-800 bg-black shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+              {authLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    id={link.id}
+                    href={link.href}
+                    className="block px-4 py-2 text-sm text-neutral-400 hover:bg-neutral-900 hover:text-amber-500"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <ul className="flex gap-6 text-sm font-light">
+            {guestLinks.map((link) => (
               <li key={link.href}>
                 <Link
-                  id={link.id}
                   href={link.href}
-                  className="block px-4 py-2 hover:bg-gray-200"
+                  className="hover:text-amber-500 transition"
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
-      ) : (
-        <ul className="flex space-x-4">
-          {guestLinks.map((link) => (
-            <li key={link.href}>
-              <Link href={link.href} className="hover:underline">
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+        )}
+      </div>
     </nav>
   );
 }

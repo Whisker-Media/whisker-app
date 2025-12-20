@@ -62,7 +62,7 @@ jobs:
             has_notice "$file" && continue
 
             case "$file" in
-              *.js|*.ts|*.java|*.c|*.cpp|*.go|*.rs)
+              *.js|*.ts|*.java|*.c|*.cpp|*.go|*.rs|*.jsx|*.ts|*.tsx)
                 add_line_comment "//" "$file"
                 ;;
               *.py|*.sh|*.rb|*.yml|*.yaml)
