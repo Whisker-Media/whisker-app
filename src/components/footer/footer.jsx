@@ -1,3 +1,6 @@
+// Copyright 2025 Whisker Media Group
+// Licensed under the Apache License, Version 2.0
+
 export default function Footer() {
   return (
     <footer className="bg-black border-t border-neutral-800 px-6 py-10 text-neutral-400 font-light">
