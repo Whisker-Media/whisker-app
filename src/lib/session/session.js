@@ -8,7 +8,7 @@ export default function main() {
   return new Promise((resolve) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       unsubscribe();
-      resolve(user);
+      resolve(user || null);
     });
   });
 }
