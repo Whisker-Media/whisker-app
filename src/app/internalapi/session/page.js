@@ -1,3 +1,6 @@
+// Copyright 2025 Whisker Media Group
+// Licensed under the Apache License, Version 2.0
+
 'use client';
 
 import { useState, useEffect } from 'react';
