@@ -1,6 +1,3 @@
-// Copyright 2025 Whisker Media Group
-// Licensed under the Apache License, Version 2.0
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,15 +5,18 @@ import session from '@lib/session/session.js';
 
 export default function SessionPage() {
   const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
+
     session()
       .then((res) => {
         if (isMounted) setData(res);
       })
       .catch((err) => {
         console.error('Failed to fetch session data:', err);
+        if (isMounted) setError(true);
       });
 
     return () => {
@@ -24,12 +24,13 @@ export default function SessionPage() {
     };
   }, []);
 
-  if (!data) return null;
+  if (!data && !error) return null;
 
-  return (
-    <div>
-      <h1>Whisker Media Session</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
-  );
+  // Show error if session fetch fails
+  if (error) {
+    return <pre>{JSON.stringify({ error: 'Failed To Fetch Session' }, null, 2)}</pre>;
+  }
+
+  // Return pure json to match the "api feeling". 
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
