@@ -6,7 +6,8 @@
     "dev": "pnpm next dev || next dev",
     "build": "pnpm next build || next build",
     "start": "pnpm next start || next start",
-    "lint": "pnpm eslint || eslint"
+    "lint": "pnpm eslint || eslint",
+    "prepare": "pnpm husky install || husky install"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
