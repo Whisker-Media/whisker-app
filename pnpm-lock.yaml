@@ -8,9 +8,21 @@ importers:
 
   .:
     dependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.50.0
+        version: 8.50.0(@typescript-eslint/parser@8.50.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.50.0
+        version: 8.50.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
+      eslint-plugin-react:
+        specifier: ^7.37.5
+        version: 7.37.5(eslint@9.39.2(jiti@2.6.1))
+      eslint-plugin-react-hooks:
+        specifier: ^7.0.1
+        version: 7.0.1(eslint@9.39.2(jiti@2.6.1))
       firebase:
         specifier: ^12.7.0
         version: 12.7.0

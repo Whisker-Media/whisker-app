@@ -19,6 +19,7 @@ out/
 
 # production
 build
+.husky/_
 
 # misc
 .DS_Store
