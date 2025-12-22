@@ -8,8 +8,8 @@ dotenv.config();
 const serviceAccountKey = {
   "type": "service_account",
   "project_id": "whisker-media",
-  "private_key_id": "REMOVED_FOR_SECURITY_REASONS",
-  "private_key": "REMOVED_FOR_SECURITY_REASONS",
+  "private_key_id": process.env.FIREBASE_KEY_ID,
+  "private_key": process.env.FIREBASE_KEY,
   "client_email": "firebase-adminsdk-fbsvc@whisker-media.iam.gserviceaccount.com",
   "client_id": "REMOVED_FOR_SECURITY_REASONS",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
