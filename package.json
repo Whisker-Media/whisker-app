@@ -9,7 +9,11 @@
     "lint": "pnpm eslint || eslint"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "firebase": "^12.7.0",
+    "firebase-admin": "^13.6.0",
+    "husky": "^9.1.7",
+    "js-cookie": "^3.0.5",
     "next": "16.0.10",
     "react": "19.2.1",
     "react-dom": "19.2.1"

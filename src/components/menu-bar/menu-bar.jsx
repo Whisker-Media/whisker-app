@@ -2,10 +2,28 @@
 // Licensed under the Apache License, Version 2.0
 
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { admin } from "@lib/firebase-admin"; 
 
 async function getUser() {
-  return { displayName: "User" }; // mock user
+  const cookieStore = cookies();
+  const authToken = cookieStore.get("authToken")?.value;
+  if (!authToken) return null;
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(authToken);
+    const userRecord = await admin.auth().getUser(decodedToken.uid);
+    return {
+      uid: userRecord.uid,
+      email: userRecord.email,
+      displayName: userRecord.displayName,
+      customClaims: decodedToken,
+    };
+  } catch(error) {
+    console.error("Error verifying auth token:", error);
+    return null;
+  }
 }
+
 
 export default async function MenuBar() {
   const user = await getUser();
@@ -19,7 +37,7 @@ export default async function MenuBar() {
 
   const guestLinks = [
     { href: "/login", label: "Login" },
-    { href: "/register", label: "Register" },
+    { href: "/signup", label: "Sign Up" },
   ];
 
   return (

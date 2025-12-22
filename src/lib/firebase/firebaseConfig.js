@@ -2,12 +2,13 @@
 // Licensed under the Apache License, Version 2.0
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyDSrGnPouPACfcKn9VwiuaEyEQz4_ZY5wM",
+  authDomain: "whisker-media.firebaseapp.com",
+  projectId: "whisker-media",
+  storageBucket: "whisker-media.firebasestorage.app",
+  messagingSenderId: "112927560100",
+  appId: "1:112927560100:web:2efcedaead9ac5d4867131",
+  measurementId: "G-3F4WNFEFQT"
 };
 
 export { firebaseConfig };
