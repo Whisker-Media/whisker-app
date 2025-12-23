@@ -2,7 +2,7 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx eslint --fix "**/*.{js,jsx,ts,tsx}"
-npm install -g pnpm 
-pnpm run prettier:check
+npm install -g pnpm
+pnpm run prettier:check || echo "Continuing"
 pnpm run prettier:write
 pnpm run prettier:check
