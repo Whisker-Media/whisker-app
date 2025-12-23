@@ -5,6 +5,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const serviceAccountKey = process.env.FIREBASE_SERVICE_KEY;
+const serviceAccountKey = JSON.parse(process.env.FIREBASE_SERVICE_KEY);
 
 export default serviceAccountKey;
