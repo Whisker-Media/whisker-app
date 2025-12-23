@@ -21,15 +21,15 @@ export default function SignupPage() {
     setError("");
 
     try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(user.user, { displayName });
+
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, displayName }),
       });
-
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(user.user, { displayName });
-
+      
       const data = await res.json();
       if (res.ok) {
         Cookies.set("authToken", data.token, { expires: 3 });
