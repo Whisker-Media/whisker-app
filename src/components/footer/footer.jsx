@@ -37,35 +37,60 @@ export default function Footer() {
         {/* Links */}
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-amber-500">Whisker</h4>
+            <h4 className="mb-3 text-sm font-semibold text-amber-500">
+              Whisker
+            </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/" className="hover:text-amber-500">Home</Link>
+                <Link href="/" className="hover:text-amber-500">
+                  Home
+                </Link>
               </li>
               <li>
-                <Link href="/credits" className="hover:text-amber-500">Credits</Link>
+                <Link href="/credits" className="hover:text-amber-500">
+                  Credits
+                </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-amber-500">About</Link>
+                <Link href="/about" className="hover:text-amber-500">
+                  About
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-amber-500">Resources</h4>
+            <h4 className="mb-3 text-sm font-semibold text-amber-500">
+              Resources
+            </h4>
             <ul className="space-y-2 text-sm font-normal">
               <li>
-                <a href="https://github.com/Whisker-Media/whisker-app" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">
+                <a
+                  href="https://github.com/Whisker-Media/whisker-app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-500"
+                >
                   GitHub Repository
                 </a>
               </li>
               <li>
-                <a href="https://whisker-social.uptimerobot.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">
+                <a
+                  href="https://whisker-social.uptimerobot.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-500"
+                >
                   Service Status
                 </a>
               </li>
               <li>
-                <a href="https://github.com/Whisker-Media/whisker-app/issues/new" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">
+                <a
+                  href="https://github.com/Whisker-Media/whisker-app/issues/new"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-500"
+                >
                   Report an Issue
                 </a>
               </li>
@@ -73,16 +98,24 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-amber-500">Community</h4>
+            <h4 className="mb-3 text-sm font-semibold text-amber-500">
+              Community
+            </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-amber-500">YouTube</a>
+                <a href="#" className="hover:text-amber-500">
+                  YouTube
+                </a>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-500">Twitter</a>
+                <a href="#" className="hover:text-amber-500">
+                  Twitter
+                </a>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-500">Feedback</a>
+                <a href="#" className="hover:text-amber-500">
+                  Feedback
+                </a>
               </li>
             </ul>
           </div>

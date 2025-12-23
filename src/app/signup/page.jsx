@@ -3,7 +3,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { auth } from "@lib/firebase";
@@ -15,6 +15,12 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (Cookies.get("authToken")) {
+      router.push("/");
+    }
+  }, [router]);
 
   async function handleSignup(e) {
     e.preventDefault();
@@ -29,7 +35,7 @@ export default function SignupPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, displayName }),
       });
-      
+
       const data = await res.json();
       if (res.ok) {
         Cookies.set("authToken", data.token, { expires: 3 });
@@ -54,11 +60,9 @@ export default function SignupPage() {
             Sign Up
           </h1>
 
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-          <input 
+          <input
             type="text"
             placeholder="Display Name"
             value={displayName}

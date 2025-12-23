@@ -7,7 +7,9 @@
     "build": "pnpm next build || next build",
     "start": "pnpm next start || next start",
     "lint": "pnpm eslint || eslint",
-    "prepare": "pnpm husky install || husky install"
+    "prepare": "pnpm husky install || husky install",
+    "prettier:check": "pnpm prettier --check . || prettier --check .",
+    "prettier:write": "pnpm prettier --write . || prettier --write ."
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^8.50.0",
@@ -20,6 +22,7 @@
     "husky": "^9.1.7",
     "js-cookie": "^3.0.5",
     "next": "16.0.10",
+    "prettier": "^3.7.4",
     "react": "19.2.1",
     "react-dom": "19.2.1"
   },

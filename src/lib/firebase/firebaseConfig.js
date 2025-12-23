@@ -8,7 +8,7 @@ const firebaseConfig = {
   storageBucket: "whisker-media.firebasestorage.app",
   messagingSenderId: "112927560100",
   appId: "1:112927560100:web:2efcedaead9ac5d4867131",
-  measurementId: "G-3F4WNFEFQT"
+  measurementId: "G-3F4WNFEFQT",
 };
 
 export { firebaseConfig };

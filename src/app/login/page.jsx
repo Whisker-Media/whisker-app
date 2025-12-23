@@ -3,7 +3,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { auth } from "@lib/firebase";
@@ -15,6 +15,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (Cookies.get("authToken")) {
+      router.push("/");
+    }
+  }, [router]);
+
   async function handleLogin(e) {
     e.preventDefault();
     setError("");
@@ -24,7 +30,7 @@ export default function LoginPage() {
       const token = await user.user.getIdToken();
       Cookies.set("authToken", token, { expires: 3 });
       router.push("/dashboard");
-    } catch(err) {
+    } catch (err) {
       setError("Invalid login credentials. Please try again: " + err.message);
     }
   }
@@ -41,9 +47,7 @@ export default function LoginPage() {
             Login
           </h1>
 
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <input
             type="email"

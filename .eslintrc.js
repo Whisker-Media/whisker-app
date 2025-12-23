@@ -4,42 +4,42 @@
 
 module.exports = {
   root: true, // Stops ESLint from looking further up the folder tree
-  parser: '@typescript-eslint/parser', // Handles TS/TSX files
+  parser: "@typescript-eslint/parser", // Handles TS/TSX files
   parserOptions: {
     ecmaVersion: 2025, // Modern ECMAScript
-    sourceType: 'module', // Enable import/export
+    sourceType: "module", // Enable import/export
     ecmaFeatures: {
       jsx: true, // Enable JSX
     },
   },
   settings: {
     react: {
-      version: 'detect', // Auto-detect React version
+      version: "detect", // Auto-detect React version
     },
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
+  plugins: ["@typescript-eslint", "react", "react-hooks", "prettier"],
   extends: [
-    'eslint:recommended', // Base JS rules
-    'plugin:react/recommended', // React rules
-    'plugin:@typescript-eslint/recommended', // TS/TSX rules
-    'plugin:prettier/recommended', // Prettier integration
+    "eslint:recommended", // Base JS rules
+    "plugin:react/recommended", // React rules
+    "plugin:@typescript-eslint/recommended", // TS/TSX rules
+    "plugin:prettier/recommended", // Prettier integration
   ],
   rules: {
     // React
-    'react/react-in-jsx-scope': 'off', // Not needed with Next.js
-    'react/prop-types': 'off', // Using TypeScript types
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+    "react/react-in-jsx-scope": "off", // Not needed with Next.js
+    "react/prop-types": "off", // Using TypeScript types
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
 
     // TypeScript
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Ignore unused args starting with _
+    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }], // Ignore unused args starting with _
 
     // Prettier
-    'prettier/prettier': ['error', { endOfLine: 'auto' }], // Keep consistent line endings
+    "prettier/prettier": ["error", { endOfLine: "auto" }], // Keep consistent line endings
 
     // General JS
-    'no-console': 'warn', // Warn on console.log
-    'no-debugger': 'warn', // Warn on debugger statements
+    "no-console": "warn", // Warn on console.log
+    "no-debugger": "warn", // Warn on debugger statements
   },
-  ignorePatterns: ['node_modules/', 'dist/', 'build/'], // Skip common folders
+  ignorePatterns: ["node_modules/", "dist/", "build/"], // Skip common folders
 };

@@ -1,12 +1,11 @@
-// Copyright 2025 Whisker Media Group
-// Licensed under the Apache License, Version 2.0
-
 import { admin } from "@lib/firebase-admin";
 import { cookies } from "next/headers";
 
-export async function GET() {
+export async function POST(req) {
   try {
-    // Get the cookies from the current request
+    const { title, content } = await req.json();
+
+    // Get auth token from cookies
     const cookieStore = await cookies();
     const token = cookieStore.get("authToken")?.value;
 
@@ -16,25 +15,29 @@ export async function GET() {
       });
     }
 
+    // Verify token and get user
     const decodedToken = await admin.auth().verifyIdToken(token);
     const user = await admin.auth().getUser(decodedToken.uid);
-    const { uid, email, displayName } = user;
 
-    // Filter out standard token fields to only return custom claims
-    const { uid: _, iat, exp, ...customClaims } = decodedToken;
+    // Add post to Firestore
+    const db = admin.firestore();
+    const newPostRef = db.collection("posts").doc();
+    await newPostRef.set({
+      id: newPostRef.id,
+      authorId: user.uid,
+      title,
+      content,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
 
     return new Response(
-      JSON.stringify({
-        uid,
-        email,
-        displayName,
-        customClaims,
-      }),
-      { status: 200 },
+      JSON.stringify({ message: "Post created", postId: newPostRef.id }),
+      { status: 201 },
     );
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
-      status: 401,
+      status: 400,
     });
   }
 }

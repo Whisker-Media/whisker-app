@@ -4,5 +4,6 @@
       "@lib/*": ["./src/lib/*"],
       "@components/*": ["./src/components/*"]
     }
-  }
+  },
+  "indent": 2
 }

@@ -15,7 +15,7 @@ export async function POST(req) {
     const token = await admin.auth().createCustomToken(user.uid);
 
     // Set cookie
-    cookies().set({
+    await cookies().set({
       name: "authToken",
       value: token,
       httpOnly: true,
@@ -26,8 +26,11 @@ export async function POST(req) {
 
     return new Response(JSON.stringify({ token }), { status: 200 });
   } catch (err) {
-    return new Response(JSON.stringify({ error: "Invalid login credentials" }), {
-      status: 400,
-    });
+    return new Response(
+      JSON.stringify({ error: "Invalid login credentials" }),
+      {
+        status: 400,
+      },
+    );
   }
 }

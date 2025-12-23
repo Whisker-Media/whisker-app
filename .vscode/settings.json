@@ -1,0 +1,18 @@
+{
+  "[javascript]": {
+    "tabSize": 2,
+    "insertSpaces": true
+  },
+  "[javascriptreact]": {
+    "tabSize": 2,
+    "insertSpaces": true
+  },
+  "[typescript]": {
+    "tabSize": 2,
+    "insertSpaces": true
+  },
+  "[typescriptreact]": {
+    "tabSize": 2,
+    "insertSpaces": true
+  }
+}
