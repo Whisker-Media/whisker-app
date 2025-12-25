@@ -1,8 +1,10 @@
 // Copyright 2025 Whisker Media Group
 // Licensed under the Apache License, Version 2.0
 
-import { cookies } from "next/headers";
-import { admin } from "@lib/firebase-admin";
+"use client";
+
+import Cookies from "js-cookie";
+import { db } from "@lib/firebase";
 
 export default async function PostsDashboardPage() {
   let loading;

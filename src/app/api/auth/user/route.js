@@ -33,6 +33,7 @@ export async function GET() {
       { status: 200 },
     );
   } catch (err) {
+    cookieStore.remove("authToken");
     return new Response(JSON.stringify({ error: err.message }), {
       status: 401,
     });

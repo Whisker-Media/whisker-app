@@ -5,6 +5,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "../components/footer/footer";
 import MenuBar from "../components/menu-bar/menu-bar";
+import { admin } from "@lib/firebase-admin";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +18,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const authToken = await cookies().get("authToken")?.value;
+  if (authToken) {
+    try {
+      const user = await admin.auth().verifyIdToken(authToken);
+      const userRecord = await admin.auth().getUser(decodedToken.uid);
+
+      } catch(err) {
+        console.log("error: " + err.message);
+        await cookies.remove("authToken");
+      }
+  }
+
   return (
     <html lang="en">
       <body
