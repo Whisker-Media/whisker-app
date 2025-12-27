@@ -2,8 +2,7 @@ permissions:
   contents: read
 name: Commit Logger
 
-on:
-  push
+on: push
 
 jobs:
   notify:

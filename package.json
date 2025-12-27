@@ -6,10 +6,23 @@
     "dev": "pnpm next dev || next dev",
     "build": "pnpm next build || next build",
     "start": "pnpm next start || next start",
-    "lint": "pnpm eslint || eslint"
+    "lint": "pnpm eslint || eslint",
+    "prepare": "pnpm husky install || husky install",
+    "prettier:check": "pnpm prettier --check . || prettier --check .",
+    "prettier:write": "pnpm prettier --write . || prettier --write ."
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "dotenv": "^17.2.3",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "firebase": "^12.7.0",
+    "firebase-admin": "^13.6.0",
+    "husky": "^9.1.7",
+    "js-cookie": "^3.0.5",
     "next": "16.0.10",
+    "prettier": "^3.7.4",
     "react": "19.2.1",
     "react-dom": "19.2.1"
   },
