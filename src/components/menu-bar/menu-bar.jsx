@@ -1,25 +1,37 @@
 // Copyright 2025 Whisker Media Group
 // Licensed under the Apache License, Version 2.0
 
+// @refresh reset
+
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { admin } from "@lib/firebase-admin";
 
-async function getUser() {
+export async function getUser() {
+  let decodedToken = null; 
+
   const cookieStore = await cookies();
   const authToken = cookieStore.get("authToken")?.value;
   if (!authToken) return null;
+
   try {
-    const decodedToken = await admin.auth().verifyIdToken(authToken);
+    decodedToken = await admin.auth().verifyIdToken(authToken);
+  } catch (err) {
+    console.error("Token verification failed:", err.message);
+    return null;
+  }
+
+  try {
     const userRecord = await admin.auth().getUser(decodedToken.uid);
+
     return {
       uid: userRecord.uid,
       email: userRecord.email,
       displayName: userRecord.displayName,
       customClaims: decodedToken,
     };
-  } catch (error) {
-    console.error("Error verifying auth token:", error);
+  } catch (err) {
+    console.error("Failed to fetch user:", err);
     return null;
   }
 }

@@ -6,7 +6,7 @@ import "./globals.css";
 import Footer from "../components/footer/footer";
 import MenuBar from "../components/menu-bar/menu-bar";
 import { admin } from "@lib/firebase-admin";
-import { cookies } from "next/headers";
+import cookies from "js-cookie";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export default async function RootLayout({ children }) {
-  const authToken = await cookies().get("authToken")?.value;
+  const authToken = cookies.get("authToken");
   if (authToken) {
     try {
       const user = await admin.auth().verifyIdToken(authToken);
