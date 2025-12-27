@@ -24,11 +24,10 @@ export default async function RootLayout({ children }) {
     try {
       const user = await admin.auth().verifyIdToken(authToken);
       const userRecord = await admin.auth().getUser(decodedToken.uid);
-
-      } catch(err) {
-        console.log("error: " + err.message);
-        await cookies.remove("authToken");
-      }
+    } catch (err) {
+      console.log("error: " + err.message);
+      await cookies.remove("authToken");
+    }
   }
 
   return (

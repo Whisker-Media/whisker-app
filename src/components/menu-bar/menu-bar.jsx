@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { admin } from "@lib/firebase-admin";
 
 export async function getUser() {
-  let decodedToken = null; 
+  let decodedToken = null;
 
   const cookieStore = await cookies();
   const authToken = cookieStore.get("authToken")?.value;
