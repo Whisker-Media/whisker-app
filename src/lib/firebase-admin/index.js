@@ -7,7 +7,7 @@ import firebaseAdminConfig from "./firebaseAdminConfig.js";
 
 let admin;
 if (!getApps().length) {
-  adminApp = firebaseAdmin.initializeApp({
+  admin = firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert(firebaseAdminConfig),
   });
 } else {
